@@ -1,27 +1,15 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from sqlalchemy import create_engine
-
-
-DATABASE_URL = "postgresql://postgres:"
+from models.base import Base
+from routes import auth
+from database import engine
 
 app = FastAPI()
-
-class UserCreate(BaseModel):
-    name: str
-    email: str 
-    password: str
+app.include_router(auth.router,prefix='/auth')
 
 
-app = FastAPI()
+
+# Based on the this sqlalchemy will create a table
+Base.metadata.create_all(engine)
 
 
-@app.post("/items/")
-async def sigup_user(user: UserCreate):
-    
-    #extract data that comes from from req
-    
-    #check if the user already exists
-    
-    #add the user to the db 
-    return user
+
