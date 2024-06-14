@@ -1,6 +1,6 @@
 import bcrypt
 from fastapi import Depends, HTTPException
-from sqlalchemy import Uuid
+import uuid
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -15,6 +15,9 @@ router = APIRouter()
 @router.post('/signup',status_code=201)
 def signup_user(user:UserCreate,db:Session=Depends(get_db)):
     
+    print('>>>>>'+user.email)
+    print('>>>>>'+user.password)
+    
     #check if the user already exists
     user_db = db.query(User).filter(User.email == user.email).first()
     
@@ -22,7 +25,7 @@ def signup_user(user:UserCreate,db:Session=Depends(get_db)):
          raise HTTPException(400,'User with the same email already exists!')
     
     hashed_pw = bcrypt.hashpw(user.password.encode(),bcrypt.gensalt(16))
-    user_db = User(id=str(Uuid.uuid4()),email=user.email,password=hashed_pw,name=user.name)
+    user_db = User(id=str(uuid.uuid4()),email=user.email,password=hashed_pw,name=user.name)
     
     #add the user to the db
     db.add(user_db)
@@ -31,8 +34,13 @@ def signup_user(user:UserCreate,db:Session=Depends(get_db)):
     
     return user_db
 
-@router.post('/signin')
+@router.post('/login')
 def signin_user(user:UserLogin ,db:Session=Depends(get_db)):
+    
+    print('>>>>>'+user.email)
+    print('>>>>>'+user.password)
+    
+    
     #check if a user with same email already exist
     user_db = db.query(User).filter(User.email == user.email).first()
     if not user_db:
@@ -44,6 +52,8 @@ def signin_user(user:UserLogin ,db:Session=Depends(get_db)):
     
     if not ismatch:
         raise HTTPException(400,'Incorrect Password!')
+    
+   
     
     return user_db
     

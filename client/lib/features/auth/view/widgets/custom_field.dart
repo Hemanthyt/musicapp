@@ -1,4 +1,3 @@
-import 'package:client/core/theme/app_pallate.dart';
 import 'package:flutter/material.dart';
 
 class CustomField extends StatelessWidget {
@@ -16,6 +15,7 @@ class CustomField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       decoration: InputDecoration(
         hintText: hintText,
       ),
