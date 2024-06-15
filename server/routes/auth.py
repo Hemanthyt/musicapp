@@ -37,10 +37,6 @@ def signup_user(user:UserCreate,db:Session=Depends(get_db)):
 @router.post('/login')
 def signin_user(user:UserLogin ,db:Session=Depends(get_db)):
     
-    print('>>>>>'+user.email)
-    print('>>>>>'+user.password)
-    
-    
     #check if a user with same email already exist
     user_db = db.query(User).filter(User.email == user.email).first()
     if not user_db:
