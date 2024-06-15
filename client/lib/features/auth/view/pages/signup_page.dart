@@ -1,9 +1,11 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:client/core/utils.dart';
 import 'package:client/core/widgets/loader.dart';
 import 'package:client/core/theme/app_pallate.dart';
 import 'package:client/features/auth/model/repositories/auth_remote_repository.dart';
 import 'package:client/features/auth/view/pages/signin_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
-import 'package:client/features/auth/view/widgets/custom_field.dart';
+import 'package:client/core/widgets/custom_field.dart';
 import 'package:client/features/auth/viewmodel/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,18 +33,19 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(authViewModelProvider)?.isLoading == true;
+    final isLoading =
+        ref.watch(authViewModelProvider.select((val) => val?.isLoading)) ==
+            true;
 
     ref.listen(authViewModelProvider, (_, next) {
       next?.when(
           data: (data) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                const SnackBar(
-                  content: Text('Account Created Succesfully! Please login.'),
-                ),
-              );
+            showSnackBar(
+              context,
+              'Success',
+              'Account Created Succesfully! Please login.',
+              ContentType.success,
+            );
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -51,13 +54,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
             );
           },
           error: (error, st) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text(error.toString()),
-                ),
-              );
+            showSnackBar(
+              context,
+              'Error',
+              error.toString(),
+              ContentType.failure,
+            );
           },
           loading: () {});
     });
@@ -86,6 +88,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     CustomField(
                       hintText: 'Name',
                       controller: nameController,
+                      suffixIcon: const Icon(Icons.person),
                     ),
                     const SizedBox(
                       height: 15,
@@ -93,6 +96,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     CustomField(
                       hintText: 'Email',
                       controller: emailController,
+                      suffixIcon: const Icon(Icons.email),
                     ),
                     const SizedBox(
                       height: 15,
@@ -101,6 +105,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       hintText: 'Password',
                       controller: passwordController,
                       isObscureText: true,
+                      suffixIcon: const Icon(Icons.lock_person),
                     ),
                     const SizedBox(
                       height: 20,
