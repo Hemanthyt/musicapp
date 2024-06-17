@@ -89,7 +89,8 @@ class AuthViewModel extends _$AuthViewModel {
         Right(value: final r) => _getDataSuccess(r),
       };
 
-      return val.value;
+      return val.hasError ? null : val.value;
+      // return val.value;
     }
     return null;
   }
