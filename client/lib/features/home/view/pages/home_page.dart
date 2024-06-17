@@ -3,6 +3,7 @@ import 'package:client/core/providers/current_user_notifier.dart';
 import 'package:client/core/theme/app_pallate.dart';
 import 'package:client/features/home/view/pages/library_page.dart';
 import 'package:client/features/home/view/pages/songs_page.dart';
+import 'package:client/features/home/view/widgets/music_slab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,7 +22,13 @@ class _HomePageState extends ConsumerState<HomePage> {
     final user = ref.watch(currentUserNotifierProvider);
     LoggerHelper.debug(user.toString());
     return Scaffold(
-      body: pages[selectedIndex],
+      body: Stack(children: [
+        pages[selectedIndex],
+        const Positioned(
+          bottom: 0,
+          child: MusicSlab(),
+        )
+      ]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: (index) {
