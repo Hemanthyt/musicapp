@@ -1,7 +1,9 @@
 import 'package:client/core/providers/current_song_notifier.dart';
+import 'package:client/core/providers/current_user_notifier.dart';
 import 'package:client/core/theme/app_pallate.dart';
 import 'package:client/core/utils.dart';
 import 'package:client/features/home/model/song_model.dart';
+import 'package:client/features/home/viewmodel/home_viewmodel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +20,8 @@ class _MusicPlayerState extends ConsumerState<MusicPlayer> {
   Widget build(BuildContext context) {
     final currentSong = ref.watch(currentSongNotifierProvider);
     final songNotifier = ref.read(currentSongNotifierProvider.notifier);
-
+    final userFavorites = ref
+        .watch(currentUserNotifierProvider.select((data) => data!.favorites));
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -104,9 +107,18 @@ class _MusicPlayerState extends ConsumerState<MusicPlayer> {
                       ),
                       const Spacer(),
                       IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.favorite_border,
+                        onPressed: () async {
+                          await ref
+                              .read(homeViewmodelProvider.notifier)
+                              .favSong(songId: currentSong.id);
+                        },
+                        icon: Icon(
+                          userFavorites
+                                  .where((fav) => fav.song_id == currentSong.id)
+                                  .toList()
+                                  .isNotEmpty
+                              ? Icons.favorite
+                              : Icons.favorite_border,
                           color: Pallete.whiteColor,
                         ),
                       )
@@ -119,7 +131,7 @@ class _MusicPlayerState extends ConsumerState<MusicPlayer> {
                       stream: songNotifier.audioPlayer!.positionStream,
                       builder: (context, snapshot) {
                         if (snapshot.data == ConnectionState.waiting) {
-                          return SizedBox();
+                          return const SizedBox();
                         }
                         final position = snapshot.data;
                         final duration = songNotifier.audioPlayer!.duration;
@@ -144,21 +156,23 @@ class _MusicPlayerState extends ConsumerState<MusicPlayer> {
                                 onChanged: (val) {
                                   sliderValue = val;
                                 },
+                                onChangeEnd: songNotifier.seek,
                               ),
                             ),
-                            const Row(children: [
+                            Row(children: [
                               Text(
-                                '0:05',
-                                style: TextStyle(
+                                '${position?.inMinutes}:${(position?.inSeconds ?? 0) < 10 ? '0${position?.inSeconds}' : position?.inSeconds}',
+                                // '${position.inMinutes}:${position.inSeconds}'
+                                style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w300,
                                   color: Pallete.subtitleText,
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Text(
-                                '0:10',
-                                style: TextStyle(
+                                '${duration?.inMinutes}:${(duration?.inSeconds ?? 0) < 10 ? '0${duration?.inSeconds}' : duration?.inSeconds}',
+                                style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w300,
                                   color: Pallete.subtitleText,
@@ -214,7 +228,7 @@ class _MusicPlayerState extends ConsumerState<MusicPlayer> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Row(

@@ -1,7 +1,9 @@
 import 'package:client/core/providers/current_song_notifier.dart';
+import 'package:client/core/providers/current_user_notifier.dart';
 import 'package:client/core/theme/app_pallate.dart';
 import 'package:client/core/utils.dart';
 import 'package:client/features/home/view/widgets/music_player.dart';
+import 'package:client/features/home/viewmodel/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,6 +14,8 @@ class MusicSlab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentSong = ref.watch(currentSongNotifierProvider);
     final songNotifier = ref.read(currentSongNotifierProvider.notifier);
+    final userFavorites = ref
+        .watch(currentUserNotifierProvider.select((data) => data!.favorites));
     if (currentSong == null) {
       return const SizedBox();
     }
@@ -44,7 +48,8 @@ class MusicSlab extends ConsumerWidget {
       child: Stack(children: [
         Hero(
           tag: 'music-image',
-          child: Container(
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
             height: 66,
             width: MediaQuery.of(context).size.width - 16,
             decoration: BoxDecoration(
@@ -90,12 +95,20 @@ class MusicSlab extends ConsumerWidget {
                 const Spacer(),
                 // Favourite Icon
                 IconButton(
-                  icon: const Icon(
-                    Icons.favorite_border,
+                  icon: Icon(
+                    userFavorites
+                            .where((fav) => fav.song_id == currentSong.id)
+                            .toList()
+                            .isNotEmpty
+                        ? Icons.favorite
+                        : Icons.favorite_border,
                     color: Pallete.whiteColor,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     // Toggle favourite icon
+                    await ref
+                        .read(homeViewmodelProvider.notifier)
+                        .favSong(songId: currentSong.id);
                   },
                 ),
                 // Play/Pause Icon
