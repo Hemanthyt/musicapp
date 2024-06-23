@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.3"
+  archive:
+    dependency: transitive
+    description:
+      name: archive
+      sha256: cb6a278ef2dbb298455e1a713bda08524a175630ec643a242c399c932a0a1f7d
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.6.1"
   args:
     dependency: transitive
     description:
@@ -281,6 +289,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.6"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      sha256: "11e40df547d418cc0c4900a9318b26304e665da6fa4755399a9ff9efd09034b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.3+1"
   dotted_border:
     dependency: "direct main"
     description:
@@ -358,6 +374,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.2"
+  flutter_launcher_icons:
+    dependency: "direct main"
+    description:
+      name: flutter_launcher_icons
+      sha256: "526faf84284b86a4cb36d20a5e45147747b7563d921373d4ee0559c54fcdbcea"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.13.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -437,6 +461,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  google_fonts:
+    dependency: "direct main"
+    description:
+      name: google_fonts
+      sha256: b1ac0fe2832c9cc95e5e88b57d627c5e68c223b9657f4b96e1487aa9098c7b82
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.1"
   graphs:
     dependency: transitive
     description:
@@ -485,6 +517,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  iconly:
+    dependency: "direct main"
+    description:
+      name: iconly
+      sha256: "22f16dd28984d232891299ead9d9b75ae5a32b4d9cdf63e8e574f1ceb11dcbd9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
+  image:
+    dependency: transitive
+    description:
+      name: image
+      sha256: "2237616a36c0d69aef7549ab439b833fb7f9fb9fc861af2cc9ac3eedddd69ca8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.0"
   intl:
     dependency: transitive
     description:
@@ -645,6 +693,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  open_file:
+    dependency: "direct main"
+    description:
+      name: open_file
+      sha256: a5a32d44acb7c899987d0999e1e3cbb0a0f1adebbf41ac813ec6d2d8faa0af20
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.2"
   package_config:
     dependency: transitive
     description:
