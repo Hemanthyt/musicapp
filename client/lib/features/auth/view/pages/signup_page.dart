@@ -80,6 +80,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       style: TextStyle(
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white70,
                       ),
                     ),
                     const SizedBox(
