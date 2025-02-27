@@ -9,7 +9,7 @@ The Music Streaming App is a feature-rich mobile application built using Flutter
 
 <img src="https://ixd.prattsi.org/wp-content/uploads/2023/01/Screen-Shot-2023-01-31-at-5.22.39-PM-941x1024.png" alt="project-screenshot" width="400" height="400/">
 
-<img src="https://i.ytimg.com/vi/TlvR0JvuNYQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&amp;rs=AOn4CLDdPyfe5nbqJvBkAHxKT88Vduk5-g" alt="project-screenshot" width="400"/">
+<img src="https://i.ytimg.com/vi/TlvR0JvuNYQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&amp;rs=AOn4CLDdPyfe5nbqJvBkAHxKT88Vduk5-g" alt="project-screenshot" width="400">
 
   
   
