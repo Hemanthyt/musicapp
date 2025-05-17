@@ -79,15 +79,16 @@ class MusicSlab extends ConsumerWidget {
                     Text(
                       currentSong.song_name,
                       style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white),
                     ),
                     Text(
                       currentSong.artist,
                       style: const TextStyle(
-                        fontSize: 16,
-                        color: Pallete.subtitleText,
+                        fontSize: 15,
+                        color: Colors.white70,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],

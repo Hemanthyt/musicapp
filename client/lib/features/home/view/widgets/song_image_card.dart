@@ -57,7 +57,7 @@ class SongCard extends StatelessWidget {
                   child: Text(
                     song.artist,
                     style: const TextStyle(
-                      color: Pallete.subtitleText,
+                      color: Colors.white70,
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
                       overflow: TextOverflow.ellipsis,

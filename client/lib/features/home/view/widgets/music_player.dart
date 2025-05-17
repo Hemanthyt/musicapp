@@ -69,7 +69,7 @@ class _MusicPlayerState extends ConsumerState<MusicPlayer> {
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(currentSong!.thumbnail_url),
+                        image: NetworkImage(currentSong.thumbnail_url),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(10),
@@ -247,6 +247,16 @@ class _MusicPlayerState extends ConsumerState<MusicPlayer> {
                           'assets/images/playlist.png',
                           color: Pallete.whiteColor,
                         ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.download),
+                        onPressed: () async {
+                          await ref
+                              .read(homeViewmodelProvider.notifier)
+                              .openFile(
+                                  url: currentSong.song_url,
+                                  Filename: currentSong.song_name);
+                        },
                       ),
                     ],
                   )

@@ -1,5 +1,6 @@
+from typing import List
 import uuid
-from fastapi import APIRouter, Depends, File, Form, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 from database import get_db
 from middleware.auth_middleware import auth_middleware
@@ -77,3 +78,18 @@ def list_fav_songs(db: Session=Depends(get_db),
     fav_songs = db.query(Favorite).filter(Favorite.user_id == user_id).options(joinedload(Favorite.song)).all()
     
     return fav_songs 
+
+@router.get('/search/songs')
+def search_songs(query: str, db: Session = Depends(get_db), auth_details=Depends(auth_middleware)):
+    user_id = auth_details['uid']
+    if not query:
+        raise HTTPException(status_code=400, detail="Query parameter is required")
+    songs = db.query(Song).filter(
+        (Song.song_name.ilike(f"%{query}%")) | 
+        (Song.artist.ilike(f"%{query}%"))
+    ).all()
+
+    if not songs:
+        raise HTTPException(status_code=404, detail="No songs found matching the query")
+
+    return songs

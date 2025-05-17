@@ -21,16 +21,18 @@ class CurrentSongNotifier extends _$CurrentSongNotifier {
     await audioPlayer?.stop();
     audioPlayer = AudioPlayer();
     final audioSource = AudioSource.uri(
-        Uri.parse(
-          song.song_url,
+      Uri.parse(
+        song.song_url,
+      ),
+      tag: MediaItem(
+        id: song.id,
+        title: song.song_name,
+        artist: song.artist,
+        artUri: Uri.parse(
+          song.thumbnail_url,
         ),
-        tag: MediaItem(
-            id: song.id,
-            title: song.song_name,
-            artist: song.artist,
-            artUri: Uri.parse(
-              song.thumbnail_url,
-            )));
+      ),
+    );
     await audioPlayer!.setAudioSource(audioSource);
     audioPlayer!.playerStateStream.listen((state) {
       if (state.processingState == ProcessingState.completed) {

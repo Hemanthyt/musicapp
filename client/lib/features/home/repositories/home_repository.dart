@@ -159,4 +159,37 @@ class HomeRepository {
       return Left(AppFailure(e.toString()));
     }
   }
+
+  Future<Either<String, List<SongModel>>> searchSongs(
+      {required String query, required String token}) async {
+    try {
+      final res = await http.get(
+          Uri.parse(
+            '${ServerConstant.serverURL}/song/search/songs?query=$query',
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': token,
+          });
+      var resBodyMap = jsonDecode(res.body);
+      LoggerHelper.info(resBodyMap.toString());
+
+      // if (res.statusCode != 200) {
+      //   resBodyMap = resBodyMap as Map<String, dynamic>;
+      //   return Left("Error");
+      // }
+      resBodyMap = resBodyMap as List;
+
+      List<SongModel> songs = [];
+
+      for (final map in resBodyMap) {
+        songs.add(SongModel.fromMap(map));
+      }
+
+      // return Right(songs);
+      return Right(songs);
+    } catch (e) {
+      return Left("Hello");
+    }
+  }
 }
